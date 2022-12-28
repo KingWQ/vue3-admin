@@ -4,17 +4,23 @@ import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ElementPlus from 'unplugin-element-plus/vite' // 不加这个配置，ElMessage出不来
 
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver({
+        importStyle:'sass'
+      })],
     }),
     Components({
       resolvers: [ElementPlusResolver()],
     }),
+    ElementPlus({
+      useSource:true
+    })
   ],
   resolve: {
     alias: {
@@ -32,5 +38,13 @@ export default ({ mode }) => defineConfig({
         rewrite: path => path.replace(/^\/api/, '') // 重写 api 为 空，就是去掉它
       }
     }
-  }
+  },
+  css: {
+    preprocessorOptions: {
+      // 覆盖掉element-plus包中的主题变量文件
+      scss: {
+        additionalData: `@use "@/styles/element/index.scss" as *;`,
+      },
+    },
+  },
 })
