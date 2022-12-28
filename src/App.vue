@@ -57,6 +57,9 @@ const state = reactive({
 
 // 监听路由的变化
 router.beforeEach((to, from, next)=>{
+  state.showMenu = !noMenu.includes(to.path)
+  document.title=pathMap[to.name]
+
   if (to.path == '/login'){
     next()
   }else{
@@ -66,8 +69,6 @@ router.beforeEach((to, from, next)=>{
       next()
     }
   }
-  state.showMenu = !noMenu.includes(to.path)
-  document.title=pathMap[to.name]
 })
 </script>
 
