@@ -2,6 +2,7 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 import Index from '@/views/Index.vue'
 import AddGood from '@/views/AddGood.vue'
 import Login from '@/views/Login.vue'
+import Swiper from '@/views/Swiper.vue'
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -20,9 +21,12 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/swiper',
+            name: 'swiper',
+            component: Swiper
         }
-
-
     ]
 })
 

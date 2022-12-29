@@ -10,15 +10,25 @@
         </div>
         <div class="line"></div>
 
-        <el-menu background-color="#222832" text-color="#fff" :router="true">
+        <el-menu
+          background-color="#222832" 
+          text-color="#fff" 
+          :router="true"
+          :default-openeds="state.defaultOpen"
+          :default-active='state.currentPath'
+        >
           <el-sub-menu index="1">
             <template #title><span>Dashboard</span></template>
-
             <el-menu-item-group>
-              <el-menu-item index="/"><el-icon><DataLine /></el-icon>首页</el-menu-item>
-              <el-menu-item index="/add"><el-icon><DataLine /></el-icon>添加商品</el-menu-item>
+              <el-menu-item index="/"><el-icon><Odometer /></el-icon>首页</el-menu-item>
+              <el-menu-item index="/add"><el-icon><Plus /></el-icon>添加商品</el-menu-item>
             </el-menu-item-group>
-
+          </el-sub-menu>
+          <el-sub-menu index="2">
+            <template #title><span>首页配置</span></template>
+            <el-menu-item-group>
+              <el-menu-item index="/swiper"><el-icon><Picture /></el-icon>轮播图配置</el-menu-item>
+            </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
 
@@ -53,11 +63,14 @@ const noMenu = ['/login']
 const router = useRouter()
 const state = reactive({
   showMenu: true, //是否需要显示菜单
+  defaultOpen: ['1', '2'],
+  currentPath: '/',
 })
 
 // 监听路由的变化
 router.beforeEach((to, from, next)=>{
   state.showMenu = !noMenu.includes(to.path)
+  state.currentPath = to.path
   document.title=pathMap[to.name]
 
   if (to.path == '/login'){
